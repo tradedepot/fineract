@@ -81,7 +81,7 @@ public class RoleWritePlatformServiceJpaRepositoryImpl implements RoleWritePlatf
             this.roleCommandFromApiJsonDeserializer.validateForCreate(command.json());
 
             final Role entity = Role.fromJson(command);
-            this.roleRepository.save(entity);
+            this.roleRepository.saveAndFlush(entity);
 
             this.topicDomainService.createTopic(entity);
 

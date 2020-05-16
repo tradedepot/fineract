@@ -63,7 +63,6 @@ import org.apache.fineract.portfolio.account.domain.AccountTransferType;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings({ "unchecked" })
@@ -525,7 +524,6 @@ public class SchedulerJobsTestResults {
 
     // Invalid test case as it won't affect summary (Loan summary is properly
     // updated before running this job)
-    @Disabled
     @Test
     public void testUpdateLoanSummaryJobOutcome() throws InterruptedException {
         this.schedulerJobHelper = new SchedulerJobHelper(requestSpec);

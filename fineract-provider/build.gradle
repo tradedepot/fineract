@@ -47,8 +47,6 @@ buildscript {
         classpath 'org.zeroturnaround:gradle-jrebel-plugin:1.1.10'
         classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.3.3.RELEASE'
         classpath 'gradle.plugin.com.hierynomus.gradle.plugins:license-gradle-plugin:0.15.0'
-        classpath 'org.apache.openjpa:openjpa:3.1.2' // when upgrading, also change OpenJPA version repeated below in dependencyManagement!
-        classpath 'com.radcortez.gradle:openjpa-gradle-plugin:3.1.0'
         classpath 'org.nosphere.apache:creadur-rat-gradle:0.7.0'
         classpath "gradle.plugin.com.github.spotbugs.snom:spotbugs-gradle-plugin:4.5.0"
         classpath "gradle.plugin.com.github.andygoossens:gradle-modernizer-plugin:1.3.0"
@@ -71,7 +69,6 @@ apply plugin: 'idea'
 apply plugin: 'com.bmuschko.cargo'
 apply plugin: 'project-report'
 apply plugin: 'java-library'
-apply plugin: 'openjpa'
 apply plugin: "com.github.spotbugs"
 apply plugin: 'checkstyle'
 apply plugin: 'com.github.andygoossens.gradle-modernizer-plugin'
@@ -93,7 +90,7 @@ dependencyManagement {
         // We use the Renovate Bot to automatically propose Pull Requests (PRs) when upgrades for all of these versions are available.
 
         dependency 'org.springframework.security.oauth:spring-security-oauth2:2.5.0.RELEASE'
-        dependency 'org.apache.openjpa:openjpa:3.1.2' // when upgrading, also change OpenJPA version repeated above in buildscript!
+        dependency 'org.eclipse.persistence:org.eclipse.persistence.jpa:2.7.7'
         dependency 'com.squareup.retrofit:retrofit:1.9.0'
         dependency 'com.squareup.okhttp:okhttp:2.7.5'
         dependency 'com.squareup.okhttp:okhttp-urlconnection:2.7.5'
@@ -128,6 +125,7 @@ dependencyManagement {
         dependency 'org.mock-server:mockserver-junit-jupiter:5.11.0'
         dependency 'org.webjars.npm:swagger-ui-dist:3.32.4'
         dependency 'org.webjars:webjars-locator-core:0.46'
+        dependency 'org.gaul:modernizer-maven-annotations:2.1.0'
 
         dependency ('org.dom4j:dom4j:2.1.3') {
             exclude 'relaxngDatatype:relaxngDatatype' // already in com.sun.xml.bind:jaxb-osgi:2.3.0.1
@@ -164,34 +162,6 @@ dependencyManagement {
 sourceCompatibility = JavaVersion.VERSION_11
 /* define binary compatibility version */
 targetCompatibility = JavaVersion.VERSION_11
-
-// If we are running Gradle within Eclipse to enhance classes with OpenJPA,
-// set the classes directory to point to Eclipse's default build directory
-if (project.hasProperty('env') && project.getProperty('env') == 'eclipse')
-{
-    sourceSets.main.java.outputDir = new File(rootProject.projectDir, "bin/main")
-}
-
-eclipse
-{
-    project {
-        buildCommand([ LaunchConfigHandle: "<project>/.externalToolBuilders/OpenJPA Enhance Builder.launch" ],  'org.eclipse.ui.externaltools.ExternalToolBuilder')
-    }
-}
-
-// Configuration for the OpenJPA enhance task
-// https://github.com/radcortez/openjpa-gradle-plugin
-System.setProperty("openjpa.Log", "commons")
-
-openjpa {
-    includes = [
-        '**/AbstractPersistableCustom.class',
-        '**/domain/*.class'
-    ]
-    enhance {
-        enforcePropertyRestrictions true
-    }
-}
 
 // Configuration for Swagger documentation generation task
 // https://github.com/swagger-api/swagger-core/tree/master/modules/swagger-gradle-plugin
@@ -696,7 +666,6 @@ cargo {
 cargoRunLocal.dependsOn bootWar
 cargoStartLocal.dependsOn bootWar
 cargoStartLocal.mustRunAfter "integrationTestClasses"
-cargoStartLocal.mustRunAfter "enhance"
 cargoStartLocal.mustRunAfter "resolve"
 
 /* http://stackoverflow.com/questions/19653311/jpa-repository-works-in-idea-and-production-but-not-in-gradle */
@@ -728,9 +697,29 @@ sourceSets {
 }
 
 configurations {
+    weaver.extendsFrom implementation
     integrationTestCompile.extendsFrom testImplementation
     integrationTestRuntime.extendsFrom testRuntime
 }
+
+task weave(type: JavaExec, dependsOn: [
+    compileJava,
+    processResources
+]) {
+    main = 'org.eclipse.persistence.tools.weaving.jpa.StaticWeave'
+    classpath configurations.weaver
+    args '-persistenceinfo'
+    args processResources.destinationDir.absolutePath
+    args '-classpath'
+    args configurations.compile.incoming.files.asPath
+    args '-loglevel'
+    args 'INFO' // logging level at "FINE" shows alot of output to console.
+    args sourceSets.main.java.outputDir.absolutePath
+    args sourceSets.main.java.outputDir.absolutePath
+
+    inputs.files fileTree(processResources.destinationDir).matching({pattern -> pattern.include('**/META-INF/persistence.xml')})
+}
+classes.dependsOn weave
 
 task integrationTest(type:Test) {
     description = "Run integration tests (located in src/integrationTest/java). Starts Tomcat in daemon mode before executing the tests (and stops it after)."

@@ -219,7 +219,7 @@ public class GroupingTypesWritePlatformServiceJpaRepositoryImpl implements Group
             }
 
             // pre-save to generate id for use in group hierarchy
-            this.groupRepository.save(newGroup);
+            this.groupRepository.saveAndFlush(newGroup);
 
             /*
              * Generate hierarchy for a new center/group and all the child groups if they exist
@@ -229,7 +229,7 @@ public class GroupingTypesWritePlatformServiceJpaRepositoryImpl implements Group
             /* Generate account number if required */
             generateAccountNumberIfRequired(newGroup);
 
-            this.groupRepository.saveAndFlush(newGroup);
+            this.groupRepository.save(newGroup);
             newGroup.captureStaffHistoryDuringCenterCreation(staff, activationDate);
 
             if (newGroup.isGroup()) {

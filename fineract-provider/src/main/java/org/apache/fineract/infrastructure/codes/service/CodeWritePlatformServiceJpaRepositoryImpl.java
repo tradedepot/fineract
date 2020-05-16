@@ -68,7 +68,7 @@ public class CodeWritePlatformServiceJpaRepositoryImpl implements CodeWritePlatf
             this.fromApiJsonDeserializer.validateForCreate(command.json());
 
             final Code code = Code.fromJson(command);
-            this.codeRepository.save(code);
+            this.codeRepository.saveAndFlush(code);
 
             return new CommandProcessingResultBuilder().withCommandId(command.commandId()).withEntityId(code.getId()).build();
         } catch (final JpaSystemException | DataIntegrityViolationException dve) {

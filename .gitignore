@@ -18,3 +18,5 @@ bin/
 fineract-provider/src/main/resources/application.properties
 .lock
 fineract-provider/out/
+default-stylesheet.xsl
+.vscode

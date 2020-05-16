@@ -213,7 +213,7 @@ public class SavingsApplicationProcessWritePlatformServiceJpaRepositoryImpl impl
             final AppUser submittedBy = this.context.authenticatedUser();
 
             final SavingsAccount account = this.savingAccountAssembler.assembleFrom(command, submittedBy);
-            this.savingAccountRepository.save(account);
+            this.savingAccountRepository.saveAndFlush(account);
             String accountNumber = "";
             GroupSavingsIndividualMonitoring gsimAccount = null;
             BigDecimal applicationId = BigDecimal.ZERO;
@@ -724,6 +724,7 @@ public class SavingsApplicationProcessWritePlatformServiceJpaRepositoryImpl impl
         }
     }
 
+    @Transactional
     @Override
     public CommandProcessingResult createActiveApplication(final SavingsAccountDataDTO savingsAccountDataDTO) {
 
@@ -740,7 +741,7 @@ public class SavingsApplicationProcessWritePlatformServiceJpaRepositoryImpl impl
         final Set<Long> existingReversedTransactionIds = new HashSet<>();
 
         if (amountForDeposit.isGreaterThanZero()) {
-            this.savingAccountRepository.save(account);
+            this.savingAccountRepository.saveAndFlush(account);
         }
         this.savingsAccountWritePlatformService.processPostActiveActions(account, savingsAccountDataDTO.getFmt(), existingTransactionIds,
                 existingReversedTransactionIds);
