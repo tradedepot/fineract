@@ -65,7 +65,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @SuppressWarnings({ "unused", "unchecked", "rawtypes", "static-access" })
-public class FixedDepositTest {
+public class FixedDepositTest { // NOK - EntityDatatablesCheck error.
 
     private static final Logger LOG = LoggerFactory.getLogger(FixedDepositTest.class);
     private ResponseSpecification responseSpec;

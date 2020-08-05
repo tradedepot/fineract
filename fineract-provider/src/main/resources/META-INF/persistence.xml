@@ -27,8 +27,10 @@
 
     <persistence-unit name="EclipseLink-PU" transaction-type="RESOURCE_LOCAL">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
             <property name="eclipselink.weaving" value="static" />
+            <property name="eclipselink.weaving.eager" value="true" />
             <property name="eclipselink.logging.level" value="FINE" />
             <property name="eclipselink.jdbc.batch-writing" value="JDBC" />
             <property name="eclipselink.ddl-generation.index-foreign-keys" value="true" />

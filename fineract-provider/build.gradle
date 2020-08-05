@@ -721,6 +721,58 @@ task weave(type: JavaExec, dependsOn: [
 }
 classes.dependsOn weave
 
+
+// def entitiesBasePackage = 'org.apache.fineract'
+
+// configurations {
+//     weave
+//     weave.extendsFrom implementation
+// }
+
+// dependencies {
+//     weave 'org.eclipse.persistence:javax.persistence:2.1.0'
+//     weave 'org.eclipse.persistence:org.eclipse.persistence.jpa:2.7.7'
+// }
+
+// compileJava {
+//     destinationDir file("$buildDir/compiled-classes")
+// }
+
+// // jpa weaving
+
+// task copyNonPersistentClasses(type: Copy, dependsOn: compileJava) {
+//     from "$buildDir/compiled-classes"
+//     into sourceSets.main.java.outputDir
+//     exclude '**/' + entitiesBasePackage.replaceAll('\\.','/') + '/**'
+//     includeEmptyDirs = false
+// }
+// task copyPersistentClasses(type: Copy, dependsOn: compileJava) {
+//     from "$buildDir/compiled-classes"
+//     into "$buildDir/unwoven-persistent-classes"
+//     include '**/' + entitiesBasePackage.replaceAll('\\.','/') + '/**'
+//     includeEmptyDirs = false
+// }
+// task weaveJpaEntities(type: JavaExec, dependsOn: [
+//     copyPersistentClasses,
+//     processResources
+// ]) {
+//     main = 'org.eclipse.persistence.tools.weaving.jpa.StaticWeave'
+//     classpath configurations.weave.incoming.files
+//     args '-persistenceinfo'
+//     args processResources.destinationDir.absolutePath
+//     args '-classpath'
+//     args configurations.compile.incoming.files.asPath
+//     args '-loglevel'
+//     args 'FINE'
+//     args copyPersistentClasses.destinationDir.absolutePath
+//     args sourceSets.main.java.outputDir.absolutePath
+
+//     inputs.files fileTree(copyPersistentClasses.destinationDir),fileTree(processResources.destinationDir).matching({pattern -> pattern.include('**/META-INF/persistence.xml')})
+//     outputs.dir sourceSets.main.java.outputDir
+// }
+// classes.dependsOn copyNonPersistentClasses,weaveJpaEntities
+
+
 task integrationTest(type:Test) {
     description = "Run integration tests (located in src/integrationTest/java). Starts Tomcat in daemon mode before executing the tests (and stops it after)."
     dependsOn cargoStartLocal
