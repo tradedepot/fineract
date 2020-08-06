@@ -119,7 +119,7 @@ public class SavingsAccountDomainServiceJpa implements SavingsAccountDomainServi
         account.validateAccountBalanceDoesNotBecomeNegative(transactionAmount, transactionBooleanValues.isExceptionForBalanceCheck(),
                 depositAccountOnHoldTransactions);
         saveTransactionToGenerateTransactionId(withdrawal);
-        this.savingsAccountRepository.save(account);
+        this.savingsAccountRepository.save(account); // OK
 
         postJournalEntries(account, existingTransactionIds, existingReversedTransactionIds, transactionBooleanValues.isAccountTransfer());
         this.businessEventNotifierService.notifyBusinessEventWasExecuted(BusinessEvents.SAVINGS_WITHDRAWAL,
@@ -201,7 +201,7 @@ public class SavingsAccountDomainServiceJpa implements SavingsAccountDomainServi
     }
 
     private Long saveTransactionToGenerateTransactionId(final SavingsAccountTransaction transaction) {
-        this.savingsAccountTransactionRepository.save(transaction);
+        this.savingsAccountTransactionRepository.saveAndFlush(transaction);
         return transaction.getId();
     }
 

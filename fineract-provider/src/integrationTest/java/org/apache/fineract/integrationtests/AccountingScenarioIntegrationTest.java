@@ -127,7 +127,7 @@ public class AccountingScenarioIntegrationTest {
     }
 
     @Test
-    public void checkUpfrontAccrualAccountingFlow() {
+    public void checkUpfrontAccrualAccountingFlow() { // NOK
         final Account assetAccount = this.accountHelper.createAssetAccount();
         final Account incomeAccount = this.accountHelper.createIncomeAccount();
         final Account expenseAccount = this.accountHelper.createExpenseAccount();
@@ -422,7 +422,7 @@ public class AccountingScenarioIntegrationTest {
     }
 
     @Test
-    public void testRecurringDepositAccountingFlow() {
+    public void testRecurringDepositAccountingFlow() { // NOK
         this.recurringDepositProductHelper = new RecurringDepositProductHelper(requestSpec, responseSpec);
         this.accountHelper = new AccountHelper(requestSpec, responseSpec);
         this.recurringDepositAccountHelper = new RecurringDepositAccountHelper(requestSpec, responseSpec);
@@ -553,7 +553,7 @@ public class AccountingScenarioIntegrationTest {
     }
 
     @Test
-    public void checkPeriodicAccrualAccountingFlow() throws InterruptedException, ParseException {
+    public void checkPeriodicAccrualAccountingFlow() throws InterruptedException, ParseException { // NOK
         final Account assetAccount = this.accountHelper.createAssetAccount();
         final Account incomeAccount = this.accountHelper.createIncomeAccount();
         final Account expenseAccount = this.accountHelper.createExpenseAccount();
@@ -666,7 +666,7 @@ public class AccountingScenarioIntegrationTest {
     }
 
     @Test
-    public void checkPeriodicAccrualAccountingFlow_OVER_PAYMENT() throws InterruptedException, ParseException {
+    public void checkPeriodicAccrualAccountingFlow_OVER_PAYMENT() throws InterruptedException, ParseException { // NOK
         final Account assetAccount = this.accountHelper.createAssetAccount();
         final Account incomeAccount = this.accountHelper.createIncomeAccount();
         final Account expenseAccount = this.accountHelper.createExpenseAccount();
@@ -931,7 +931,7 @@ public class AccountingScenarioIntegrationTest {
     }
 
     @Test
-    public void checkCashBasedAccountingFlow() {
+    public void checkCashBasedAccountingFlow() { // NOK
         final Account assetAccount = this.accountHelper.createAssetAccount();
         final Account incomeAccount = this.accountHelper.createIncomeAccount();
         final Account expenseAccount = this.accountHelper.createExpenseAccount();

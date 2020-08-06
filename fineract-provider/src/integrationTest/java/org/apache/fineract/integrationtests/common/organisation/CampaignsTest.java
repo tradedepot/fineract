@@ -42,7 +42,7 @@ import org.mockserver.model.MediaType;
 @ExtendWith(MockServerExtension.class)
 @MockServerSettings(ports = { 9191 })
 
-public class CampaignsTest {
+public class CampaignsTest { // NOK
 
     private RequestSpecification requestSpec;
     private ResponseSpecification responseSpec;

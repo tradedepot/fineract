@@ -403,7 +403,7 @@ public class ClientWritePlatformServiceJpaRepositoryImpl implements ClientWriteP
             final ClientNonPerson newClientNonPerson = ClientNonPerson.createNew(client, clientNonPersonConstitution,
                     clientNonPersonMainBusinessLine, incorpNumber, incorpValidityTill, remarks);
 
-            this.clientNonPersonRepository.save(newClientNonPerson);
+            this.clientNonPersonRepository.saveAndFlush(newClientNonPerson);
         }
     }
 

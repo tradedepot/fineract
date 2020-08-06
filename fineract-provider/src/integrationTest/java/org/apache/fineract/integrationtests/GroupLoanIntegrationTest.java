@@ -48,7 +48,7 @@ import org.slf4j.LoggerFactory;
  * Group Loan Integration Test for checking Loan Application Repayment Schedule.
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-public class GroupLoanIntegrationTest { // NOK - EntityDatatablesCheck error.
+public class GroupLoanIntegrationTest {
 
     private ResponseSpecification responseSpec;
     private RequestSpecification requestSpec;
@@ -79,7 +79,7 @@ public class GroupLoanIntegrationTest { // NOK - EntityDatatablesCheck error.
     }
 
     @Test
-    public void checkGlimAccountCommands() {
+    public void checkGlimAccountCommands() { // NOK
         this.loanTransactionHelper = new LoanTransactionHelper(this.requestSpec, this.responseSpec);
         final Integer clientID = ClientHelper.createClient(this.requestSpec, this.responseSpec);
         Integer groupID = GroupHelper.createGroup(this.requestSpec, this.responseSpec, true);

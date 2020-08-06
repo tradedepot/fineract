@@ -269,7 +269,7 @@ public class DepositApplicationProcessWritePlatformServiceJpaRepositoryImpl impl
             final RecurringDepositAccount account = (RecurringDepositAccount) this.depositAccountAssembler.assembleFrom(command,
                     submittedBy, DepositAccountType.RECURRING_DEPOSIT);
 
-            this.recurringDepositAccountRepository.save(account);
+            this.recurringDepositAccountRepository.save(account); // OK
 
             if (account.isAccountNumberRequiresAutoGeneration()) {
                 final AccountNumberFormat accountNumberFormat = this.accountNumberFormatRepository

@@ -54,7 +54,7 @@ import org.slf4j.LoggerFactory;
  * Group Savings Integration Test for checking Savings Application.
  */
 @SuppressWarnings({ "rawtypes", "unused" })
-public class GroupSavingsIntegrationTest { // NOK - EntityDatatablesCheck error.
+public class GroupSavingsIntegrationTest {
 
     public static final String DEPOSIT_AMOUNT = "2000";
     public static final String WITHDRAW_AMOUNT = "1000";
@@ -76,7 +76,7 @@ public class GroupSavingsIntegrationTest { // NOK - EntityDatatablesCheck error.
     }
 
     @Test
-    public void testSavingsAccount() {
+    public void testSavingsAccount() { // NOK
         this.savingsAccountHelper = new SavingsAccountHelper(requestSpec, responseSpec);
 
         final Integer clientID = ClientHelper.createClient(this.requestSpec, this.responseSpec);

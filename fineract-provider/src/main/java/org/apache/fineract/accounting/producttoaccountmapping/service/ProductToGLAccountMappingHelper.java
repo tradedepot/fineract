@@ -78,7 +78,7 @@ public class ProductToGLAccountMappingHelper {
 
         final ProductToGLAccountMapping accountMapping = new ProductToGLAccountMapping(glAccount, productId,
                 portfolioProductType.getValue(), placeHolderTypeId);
-        this.accountMappingRepository.save(accountMapping);
+        this.accountMappingRepository.saveAndFlush(accountMapping);
     }
 
     public void mergeProductToAccountMappingChanges(final JsonElement element, final String paramName, final Long productId,

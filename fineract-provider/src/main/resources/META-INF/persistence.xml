@@ -34,6 +34,7 @@
             <property name="eclipselink.logging.level" value="FINE" />
             <property name="eclipselink.jdbc.batch-writing" value="JDBC" />
             <property name="eclipselink.ddl-generation.index-foreign-keys" value="true" />
+            <property name="eclipselink.persistence-context.flush-mode=auto" value="auto" />
         </properties>
     </persistence-unit>
 </persistence>

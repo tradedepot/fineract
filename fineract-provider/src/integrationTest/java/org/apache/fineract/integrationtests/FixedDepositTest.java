@@ -65,7 +65,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @SuppressWarnings({ "unused", "unchecked", "rawtypes", "static-access" })
-public class FixedDepositTest { // NOK - EntityDatatablesCheck error.
+public class FixedDepositTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(FixedDepositTest.class);
     private ResponseSpecification responseSpec;
@@ -258,7 +258,7 @@ public class FixedDepositTest { // NOK - EntityDatatablesCheck error.
     }
 
     @Test
-    public void testFixedDepositAccountWithPrematureClosureTypeWithdrawal_WITH_HOLD_TAX() {
+    public void testFixedDepositAccountWithPrematureClosureTypeWithdrawal_WITH_HOLD_TAX() { // NOK
         this.fixedDepositProductHelper = new FixedDepositProductHelper(this.requestSpec, this.responseSpec);
         this.accountHelper = new AccountHelper(this.requestSpec, this.responseSpec);
         this.savingsAccountHelper = new SavingsAccountHelper(this.requestSpec, this.responseSpec);

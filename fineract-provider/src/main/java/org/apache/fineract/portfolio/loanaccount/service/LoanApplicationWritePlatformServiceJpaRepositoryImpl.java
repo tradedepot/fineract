@@ -382,7 +382,7 @@ public class LoanApplicationWritePlatformServiceJpaRepositoryImpl implements Loa
                 }
             }
 
-            this.loanRepositoryWrapper.save(newLoanApplication);
+            this.loanRepositoryWrapper.saveAndFlush(newLoanApplication);
 
             if (loanProduct.isInterestRecalculationEnabled()) {
                 this.fromApiJsonDeserializer.validateLoanForInterestRecalculation(newLoanApplication);

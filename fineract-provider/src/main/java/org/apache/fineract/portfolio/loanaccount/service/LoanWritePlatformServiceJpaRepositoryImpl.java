@@ -590,7 +590,7 @@ public class LoanWritePlatformServiceJpaRepositoryImpl implements LoanWritePlatf
             List<LoanRepaymentScheduleInstallment> installments = loan.getRepaymentScheduleInstallments();
             for (LoanRepaymentScheduleInstallment installment : installments) {
                 if (installment.getId() == null) {
-                    this.repaymentScheduleInstallmentRepository.save(installment);
+                    this.repaymentScheduleInstallmentRepository.saveAndFlush(installment);
                 }
             }
             this.loanRepositoryWrapper.saveAndFlush(loan);
@@ -613,10 +613,10 @@ public class LoanWritePlatformServiceJpaRepositoryImpl implements LoanWritePlatf
             List<LoanRepaymentScheduleInstallment> installments = loan.getRepaymentScheduleInstallments();
             for (LoanRepaymentScheduleInstallment installment : installments) {
                 if (installment.getId() == null) {
-                    this.repaymentScheduleInstallmentRepository.save(installment);
+                    this.repaymentScheduleInstallmentRepository.saveAndFlush(installment);
                 }
             }
-            this.loanRepositoryWrapper.save(loan);
+            this.loanRepositoryWrapper.saveAndFlush(loan);
         } catch (final JpaSystemException | DataIntegrityViolationException e) {
             final Throwable realCause = e.getCause();
             final List<ApiParameterError> dataValidationErrors = new ArrayList<>();
@@ -1217,7 +1217,7 @@ public class LoanWritePlatformServiceJpaRepositoryImpl implements LoanWritePlatf
         final ChangedTransactionDetail changedTransactionDetail = loan.closeAsWrittenOff(command, defaultLoanLifecycleStateMachine(),
                 changes, existingTransactionIds, existingReversedTransactionIds, currentUser, scheduleGeneratorDTO);
         LoanTransaction writeoff = changedTransactionDetail.getNewTransactionMappings().remove(0L);
-        this.loanTransactionRepository.save(writeoff);
+        this.loanTransactionRepository.saveAndFlush(writeoff);
         for (final Map.Entry<Long, LoanTransaction> mapEntry : changedTransactionDetail.getNewTransactionMappings().entrySet()) {
             this.loanTransactionRepository.save(mapEntry.getValue());
             this.accountTransfersWritePlatformService.updateLoanTransaction(mapEntry.getKey(), mapEntry.getValue());
@@ -1272,7 +1272,7 @@ public class LoanWritePlatformServiceJpaRepositoryImpl implements LoanWritePlatf
                 existingTransactionIds, existingReversedTransactionIds, scheduleGeneratorDTO, currentUser);
         final LoanTransaction possibleClosingTransaction = changedTransactionDetail.getNewTransactionMappings().remove(0L);
         if (possibleClosingTransaction != null) {
-            this.loanTransactionRepository.save(possibleClosingTransaction);
+            this.loanTransactionRepository.saveAndFlush(possibleClosingTransaction);
         }
         for (final Map.Entry<Long, LoanTransaction> mapEntry : changedTransactionDetail.getNewTransactionMappings().entrySet()) {
             this.loanTransactionRepository.save(mapEntry.getValue());
