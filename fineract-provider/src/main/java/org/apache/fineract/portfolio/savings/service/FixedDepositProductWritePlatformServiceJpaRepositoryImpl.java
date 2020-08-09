@@ -152,7 +152,7 @@ public class FixedDepositProductWritePlatformServiceJpaRepositoryImpl implements
             changes.putAll(accountingMappingChanges);
 
             if (!changes.isEmpty()) {
-                this.fixedDepositProductRepository.save(product);
+                this.fixedDepositProductRepository.saveAndFlush(product);
             }
 
             return new CommandProcessingResultBuilder() //

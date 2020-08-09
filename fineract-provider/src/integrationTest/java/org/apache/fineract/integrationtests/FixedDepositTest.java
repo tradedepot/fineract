@@ -258,7 +258,7 @@ public class FixedDepositTest {
     }
 
     @Test
-    public void testFixedDepositAccountWithPrematureClosureTypeWithdrawal_WITH_HOLD_TAX() { // NOK
+    public void testFixedDepositAccountWithPrematureClosureTypeWithdrawal_WITH_HOLD_TAX() {
         this.fixedDepositProductHelper = new FixedDepositProductHelper(this.requestSpec, this.responseSpec);
         this.accountHelper = new AccountHelper(this.requestSpec, this.responseSpec);
         this.savingsAccountHelper = new SavingsAccountHelper(this.requestSpec, this.responseSpec);

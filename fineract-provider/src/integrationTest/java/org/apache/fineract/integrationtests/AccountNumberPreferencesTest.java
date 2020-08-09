@@ -103,7 +103,7 @@ public class AccountNumberPreferencesTest {
     }
 
     @Test
-    public void testAccountNumberPreferences() { // NOK
+    public void testAccountNumberPreferences() {
 
         /* Create Loan and Savings Product */
         this.createLoanAndSavingsProduct();

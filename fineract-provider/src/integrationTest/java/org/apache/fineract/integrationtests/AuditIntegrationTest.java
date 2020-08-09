@@ -105,7 +105,7 @@ public class AuditIntegrationTest {
     }
 
     @Test
-    public void checkAuditsWithLimitParam() { // NOK
+    public void checkAuditsWithLimitParam() {
         // Create client
         final Integer clientId = ClientHelper.createClient(this.requestSpec, this.responseSpec);
 

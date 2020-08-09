@@ -249,7 +249,7 @@ public class SavingsApplicationProcessWritePlatformServiceJpaRepositoryImpl impl
                                     Long.valueOf(1), true, SavingsAccountStatusType.SUBMITTED_AND_PENDING_APPROVAL.getValue(),
                                     applicationId);
                             account.setGsim(gsimAccount);
-                            this.savingAccountRepository.save(account);
+                            this.savingAccountRepository.saveAndFlush(account);
 
                         } else {
                             // Parent-empty table
@@ -258,7 +258,7 @@ public class SavingsApplicationProcessWritePlatformServiceJpaRepositoryImpl impl
                             gsimWritePlatformService.addGSIMAccountInfo(accountNumber, group, BigDecimal.ZERO, Long.valueOf(1), true,
                                     SavingsAccountStatusType.SUBMITTED_AND_PENDING_APPROVAL.getValue(), applicationId);
                             account.setGsim(gsimRepository.findOneByAccountNumber(accountNumber));
-                            this.savingAccountRepository.save(account);
+                            this.savingAccountRepository.saveAndFlush(account);
                         }
                     } else {
                         if (gsimRepository.count() != 0) {
@@ -268,7 +268,7 @@ public class SavingsApplicationProcessWritePlatformServiceJpaRepositoryImpl impl
                             account.updateAccountNo(accountNumber);
                             this.gsimWritePlatformService.incrementChildAccountCount(gsimAccount);
                             account.setGsim(gsimAccount);
-                            this.savingAccountRepository.save(account);
+                            this.savingAccountRepository.saveAndFlush(account);
 
                         } else {
                             // Child-empty table
@@ -279,7 +279,7 @@ public class SavingsApplicationProcessWritePlatformServiceJpaRepositoryImpl impl
                             gsimWritePlatformService.addGSIMAccountInfo(accountNumber, group, BigDecimal.ZERO, Long.valueOf(1), true,
                                     SavingsAccountStatusType.SUBMITTED_AND_PENDING_APPROVAL.getValue(), applicationId);
                             account.setGsim(gsimAccount);
-                            this.savingAccountRepository.save(account);
+                            this.savingAccountRepository.saveAndFlush(account);
                         }
                         // reset isAcceptingChild when processing last
                         // application of GSIM
@@ -329,7 +329,7 @@ public class SavingsApplicationProcessWritePlatformServiceJpaRepositoryImpl impl
             final AccountNumberFormat accountNumberFormat = this.accountNumberFormatRepository.findByAccountType(EntityAccountType.SAVINGS);
             account.updateAccountNo(this.accountNumberGenerator.generate(account, accountNumberFormat));
 
-            this.savingAccountRepository.save(account);
+            this.savingAccountRepository.saveAndFlush(account);
         }
     }
 
@@ -745,7 +745,7 @@ public class SavingsApplicationProcessWritePlatformServiceJpaRepositoryImpl impl
         }
         this.savingsAccountWritePlatformService.processPostActiveActions(account, savingsAccountDataDTO.getFmt(), existingTransactionIds,
                 existingReversedTransactionIds);
-        this.savingAccountRepository.save(account);
+        this.savingAccountRepository.saveAndFlush(account);
 
         generateAccountNumber(account);
         // post journal entries for activation charges

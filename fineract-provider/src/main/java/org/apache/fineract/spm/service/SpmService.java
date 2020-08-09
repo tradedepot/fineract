@@ -123,7 +123,7 @@ public class SpmService {
         final DateTime dateTime = getStartOfToday().minusMillis(1);
         survey.setValidTo(dateTime.toDate());
 
-        this.surveyRepository.save(survey);
+        this.surveyRepository.saveAndFlush(survey);
     }
 
     public void activateSurvey(final Long id) {
@@ -137,7 +137,7 @@ public class SpmService {
         survey.setValidFrom(validFrom.toDate());
         survey.setValidTo(cal.getTime());
 
-        this.surveyRepository.save(survey);
+        this.surveyRepository.saveAndFlush(survey);
     }
 
     public static DateTime getStartOfToday() {

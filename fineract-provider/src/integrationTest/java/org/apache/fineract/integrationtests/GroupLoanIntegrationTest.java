@@ -79,7 +79,7 @@ public class GroupLoanIntegrationTest {
     }
 
     @Test
-    public void checkGlimAccountCommands() { // NOK
+    public void checkGlimAccountCommands() {
         this.loanTransactionHelper = new LoanTransactionHelper(this.requestSpec, this.responseSpec);
         final Integer clientID = ClientHelper.createClient(this.requestSpec, this.responseSpec);
         Integer groupID = GroupHelper.createGroup(this.requestSpec, this.responseSpec, true);

@@ -187,7 +187,7 @@ public class PortfolioCommandSourceWritePlatformServiceImpl implements Portfolio
         validateIsUpdateAllowed();
         final AppUser maker = this.context.authenticatedUser();
         commandSourceInput.markAsRejected(maker, DateTime.now());
-        this.commandSourceRepository.save(commandSourceInput);
+        this.commandSourceRepository.saveAndFlush(commandSourceInput);
         return makerCheckerId;
     }
 }

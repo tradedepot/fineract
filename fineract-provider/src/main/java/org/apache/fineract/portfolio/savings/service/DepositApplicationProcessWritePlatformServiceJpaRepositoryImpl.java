@@ -209,7 +209,7 @@ public class DepositApplicationProcessWritePlatformServiceJpaRepositoryImpl impl
 
             account.updateMaturityDateAndAmountBeforeAccountActivation(mc, isPreMatureClosure, isSavingsInterestPostingAtCurrentPeriodEnd,
                     financialYearBeginningMonth);
-            this.fixedDepositAccountRepository.save(account);
+            this.fixedDepositAccountRepository.saveAndFlush(account);
 
             if (account.isAccountNumberRequiresAutoGeneration()) {
                 AccountNumberFormat accountNumberFormat = this.accountNumberFormatRepository.findByAccountType(EntityAccountType.CLIENT);
@@ -269,7 +269,7 @@ public class DepositApplicationProcessWritePlatformServiceJpaRepositoryImpl impl
             final RecurringDepositAccount account = (RecurringDepositAccount) this.depositAccountAssembler.assembleFrom(command,
                     submittedBy, DepositAccountType.RECURRING_DEPOSIT);
 
-            this.recurringDepositAccountRepository.save(account); // OK
+            this.recurringDepositAccountRepository.save(account);
 
             if (account.isAccountNumberRequiresAutoGeneration()) {
                 final AccountNumberFormat accountNumberFormat = this.accountNumberFormatRepository

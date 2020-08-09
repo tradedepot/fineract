@@ -58,7 +58,6 @@ import org.joda.time.Months;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1596,7 +1595,6 @@ public class RecurringDepositTest {
      * Test case for verify premature closure amount with penal interest for whole term with closure transaction type
      * withdrawal and 365 days in year
      */
-    // @Disabled // FINERACT-1051
     @Test
     public void testPrematureClosureAmountWithPenalInterestForWholeTerm_With_365_Days() {
         this.recurringDepositProductHelper = new RecurringDepositProductHelper(this.requestSpec, this.responseSpec);
@@ -1721,7 +1719,6 @@ public class RecurringDepositTest {
      * Test case for verify premature closure amount with penal interest for whole term with closure transaction type
      * withdrawal and 360 days in year
      */
-    @Disabled // FINERACT-1051
     @Test
     public void testPrematureClosureAmountWithPenalInterestForWholeTerm_With_360_Days() {
         this.recurringDepositProductHelper = new RecurringDepositProductHelper(this.requestSpec, this.responseSpec);
@@ -1851,7 +1848,6 @@ public class RecurringDepositTest {
      * Test case for verify premature closure amount with penal interest till maturity date with closure transaction
      * type withdrawal and 365 days in year
      */
-    @Disabled // FINERACT-1051
     @Test
     public void testPrematureClosureAmountWithPenalInterestTillPrematureWithdrawal_With_365_Days() {
         this.recurringDepositProductHelper = new RecurringDepositProductHelper(this.requestSpec, this.responseSpec);
@@ -1988,7 +1984,6 @@ public class RecurringDepositTest {
      * Test case verify premature closure amount with penal interest till maturity date with closure transaction type
      * withdrawal and 360 days in year
      */
-    @Disabled // FINERACT-1051
     @Test
     public void testPrematureClosureAmountWithPenalInterestTillPrematureWithdrawal_With_360_Days() {
         this.recurringDepositProductHelper = new RecurringDepositProductHelper(this.requestSpec, this.responseSpec);

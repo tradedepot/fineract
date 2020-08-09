@@ -42,7 +42,7 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ShareAccountIntegrationTests { // NOK
+public class ShareAccountIntegrationTests {
 
     private static final Logger LOG = LoggerFactory.getLogger(ShareAccountIntegrationTests.class);
     private RequestSpecification requestSpec;

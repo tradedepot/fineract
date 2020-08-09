@@ -302,7 +302,7 @@ public class ClientWritePlatformServiceJpaRepositoryImpl implements ClientWriteP
                 rollbackTransaction = this.commandProcessingService.validateCommand(commandWrapper, currentUser);
             }
 
-            this.clientRepository.saveAndFlush(newClient);
+            this.clientRepository.save(newClient);
             if (newClient.isActive()) {
                 this.businessEventNotifierService.notifyBusinessEventWasExecuted(BusinessEvents.CLIENTS_ACTIVATE,
                         constructEntityMap(BusinessEntity.CLIENT, newClient));
@@ -310,14 +310,14 @@ public class ClientWritePlatformServiceJpaRepositoryImpl implements ClientWriteP
             if (newClient.isAccountNumberRequiresAutoGeneration()) {
                 AccountNumberFormat accountNumberFormat = this.accountNumberFormatRepository.findByAccountType(EntityAccountType.CLIENT);
                 newClient.updateAccountNo(accountNumberGenerator.generate(newClient, accountNumberFormat));
-                this.clientRepository.saveAndFlush(newClient);
+                this.clientRepository.save(newClient);
             }
 
             final Locale locale = command.extractLocale();
             final DateTimeFormatter fmt = DateTimeFormat.forPattern(command.dateFormat()).withLocale(locale);
             CommandProcessingResult result = openSavingsAccount(newClient, fmt);
             if (result.getSavingsId() != null) {
-                this.clientRepository.saveAndFlush(newClient);
+                this.clientRepository.save(newClient);
 
             }
 
@@ -403,7 +403,7 @@ public class ClientWritePlatformServiceJpaRepositoryImpl implements ClientWriteP
             final ClientNonPerson newClientNonPerson = ClientNonPerson.createNew(client, clientNonPersonConstitution,
                     clientNonPersonMainBusinessLine, incorpNumber, incorpValidityTill, remarks);
 
-            this.clientNonPersonRepository.saveAndFlush(newClientNonPerson);
+            this.clientNonPersonRepository.save(newClientNonPerson);
         }
     }
 
