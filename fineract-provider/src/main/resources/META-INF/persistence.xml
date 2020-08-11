@@ -30,6 +30,7 @@
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
             <property name="eclipselink.weaving" value="static" />
+            <!-- <property name="eclipselink.id-validation" value="Null" /> -->
             <property name="eclipselink.weaving.eager" value="true" />
             <property name="eclipselink.logging.level" value="FINE" />
             <property name="eclipselink.target-database" value="MySQL" />
