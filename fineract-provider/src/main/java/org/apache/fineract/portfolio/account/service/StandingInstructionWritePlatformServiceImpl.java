@@ -131,6 +131,7 @@ public class StandingInstructionWritePlatformServiceImpl implements StandingInst
                 standingInstructionId = standingInstruction.accountTransferStandingInstruction().getId();
 
             }
+            this.accountTransferDetailRepository.flush();
         } catch (final JpaSystemException | DataIntegrityViolationException dve) {
             final Throwable throwable = dve.getMostSpecificCause();
             handleDataIntegrityIssues(command, throwable, dve);
