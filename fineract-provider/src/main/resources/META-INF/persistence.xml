@@ -31,8 +31,9 @@
         <shared-cache-mode>NONE</shared-cache-mode>
         <properties>
             <property name="eclipselink.weaving" value="static" />
-            <!-- <property name="eclipselink.id-validation" value="Null" /> -->
             <!-- <property name="eclipselink.logging.file" value="C:\myout\"/> -->
+            <!-- Performance Profiling https://www.eclipse.org/eclipselink/documentation/2.5/solutions/performance002.htm#CHDIAFJI -->
+            <property name="eclipselink.profiler" value="PerformanceProfiler"/>
             <property name="eclipselink.weaving.eager" value="true" />
             <property name="eclipselink.logging.level" value="FINE" />
             <property name="eclipselink.allow-zero-id" value="true" />
