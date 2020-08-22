@@ -127,7 +127,7 @@ public class SchedulerJobsTest {
     }
 
     @Test
-    public void testTriggeringManualExecutionOfAllSchedulerJobs() { // NOK
+    public void testTriggeringManualExecutionOfAllSchedulerJobs() {
         for (String jobName : schedulerJobHelper.getAllSchedulerJobNames()) {
             schedulerJobHelper.executeAndAwaitJob(jobName);
         }

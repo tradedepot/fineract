@@ -76,7 +76,7 @@ public class GroupSavingsIntegrationTest {
     }
 
     @Test
-    public void testSavingsAccount() { // NOK
+    public void testSavingsAccount() {
         this.savingsAccountHelper = new SavingsAccountHelper(requestSpec, responseSpec);
 
         final Integer clientID = ClientHelper.createClient(this.requestSpec, this.responseSpec);
