@@ -34,7 +34,6 @@ import org.apache.fineract.integrationtests.common.loans.LoanStatusChecker;
 import org.apache.fineract.integrationtests.common.loans.LoanTransactionHelper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,7 +57,6 @@ public class LoanApplicationUndoLastTrancheTest {
         this.loanApplicationApprovalTest = new LoanApplicationApprovalTest();
     }
 
-    @Disabled // FINERACT-1050
     @Test
     public void loanApplicationUndoLastTranche() {
 

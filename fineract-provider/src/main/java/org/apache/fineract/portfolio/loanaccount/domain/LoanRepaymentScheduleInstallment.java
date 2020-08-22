@@ -18,30 +18,55 @@
  */
 package org.apache.fineract.portfolio.loanaccount.domain;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import org.apache.fineract.infrastructure.core.domain.AbstractAuditableCustom;
+import javax.persistence.Transient;
 import org.apache.fineract.organisation.monetary.domain.MonetaryCurrency;
 import org.apache.fineract.organisation.monetary.domain.Money;
+import org.apache.fineract.useradministration.domain.AppUser;
 import org.joda.time.LocalDate;
+import org.springframework.data.domain.Auditable;
 
 @Entity
 @Table(name = "m_loan_repayment_schedule")
-public final class LoanRepaymentScheduleInstallment extends AbstractAuditableCustom
-        implements Comparable<LoanRepaymentScheduleInstallment> {
+public class LoanRepaymentScheduleInstallment
+        implements Serializable, Comparable<LoanRepaymentScheduleInstallment>, Auditable<AppUser, Long, Instant> {
+
+    private static final long serialVersionUID = 9181640245194392646L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "installmentTable")
+    @TableGenerator(name = "installmentTable", table = "installment_id_gen", pkColumnName = "id", valueColumnName = "installment_id_value", pkColumnValue = "id")
+    private Long id;
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    protected void setId(final Long id) {
+        this.id = id;
+    }
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "loan_id", referencedColumnName = "id")
@@ -132,11 +157,64 @@ public final class LoanRepaymentScheduleInstallment extends AbstractAuditableCus
     @JoinColumn(name = "loan_repayment_schedule_id", referencedColumnName = "id", nullable = false)
     private Set<LoanInterestRecalcualtionAdditionalDetails> loanCompoundingDetails = new HashSet<>();
 
-    LoanRepaymentScheduleInstallment() {
-        this.installmentNumber = null;
-        this.fromDate = null;
-        this.dueDate = null;
-        this.obligationsMet = false;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "createdby_id")
+    private AppUser createdBy;
+
+    @Column(name = "created_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "lastmodifiedby_id")
+    private AppUser lastModifiedBy;
+
+    @Column(name = "lastmodified_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastModifiedDate;
+
+    @Override
+    public Optional<AppUser> getCreatedBy() {
+        return Optional.ofNullable(this.createdBy);
+    }
+
+    @Override
+    public void setCreatedBy(final AppUser createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    @Override
+    public Optional<Instant> getCreatedDate() {
+        return null == this.createdDate ? Optional.empty() : Optional.of(this.createdDate.toInstant());
+    }
+
+    @Override
+    public void setCreatedDate(final Instant createdDate) {
+        this.createdDate = null == createdDate ? null : Date.from(createdDate);
+    }
+
+    @Override
+    public Optional<AppUser> getLastModifiedBy() {
+        return Optional.ofNullable(this.lastModifiedBy);
+    }
+
+    @Override
+    public void setLastModifiedBy(final AppUser lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
+    }
+
+    @Override
+    public Optional<Instant> getLastModifiedDate() {
+        return null == this.lastModifiedDate ? Optional.empty() : Optional.of(this.lastModifiedDate.toInstant());
+    }
+
+    @Override
+    public void setLastModifiedDate(final Instant lastModifiedDate) {
+        this.lastModifiedDate = null == lastModifiedDate ? null : Date.from(lastModifiedDate);
+    }
+
+    public LoanRepaymentScheduleInstallment() {
+        //
     }
 
     public LoanRepaymentScheduleInstallment(final Loan loan, final Integer installmentNumber, final LocalDate fromDate,
@@ -806,5 +884,11 @@ public final class LoanRepaymentScheduleInstallment extends AbstractAuditableCus
     public Money getTotalPaid(final MonetaryCurrency currency) {
         return getPenaltyChargesPaid(currency).plus(getFeeChargesPaid(currency)).plus(getInterestPaid(currency))
                 .plus(getPrincipalCompleted(currency));
+    }
+
+    @Override
+    @Transient // DATAJPA-622
+    public boolean isNew() {
+        return null == this.id;
     }
 }
