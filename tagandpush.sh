@@ -13,7 +13,7 @@ for i in `docker ps -aq` ; do
 	if [[ $image == project_fineract-server* ]]; then
 		echo Tagging $image...
 		echo docker tag $imageid tradedepot/fineract:$tag
-		docker tag $imageid $image:$tag
+		docker tag $imageid tradedepot/fineract:$tag
 		if [ $CI ]; then
 			docker push $image:$tag
 		fi
