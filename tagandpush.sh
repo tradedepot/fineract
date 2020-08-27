@@ -15,7 +15,7 @@ for i in `docker ps -aq` ; do
 		echo docker tag $imageid tradedepot/fineract:$tag
 		docker tag $imageid tradedepot/fineract:$tag
 		if [ $CI ]; then
-			docker push $image:$tag
+			docker push tradedepot/fineract:$tag
 		fi
 	fi
 done
