@@ -11,7 +11,7 @@ jobs:
      - METEOR_ALLOW_SUPERUSER: true
      - TOOL_NODE_FLAGS: "--max-old-space-size=4096"
    machine:
-     image: circleci/classic:201708-01
+     image: ubuntu-1604:202004-01
    steps:
    - checkout
    - run: sudo mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS

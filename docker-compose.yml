@@ -18,7 +18,7 @@
 
 # NB: Travis CI (dist: bionic) supports up to v3.7
 # (unless we'd install a more recent version in .travis.yml)
-version: '3.2'
+version: '3.7'
 services:
   # Backend service
   fineractmysql:
