@@ -10,7 +10,7 @@ for i in `docker ps -aq` ; do
 	image=`docker inspect --format="{{ .Config.Image }}" $i`
 	imageid=`docker inspect --format="{{ .Image }}" $i`
 	echo Image is $image
-	if [[ $image == tradedepot* ]]; then
+	if [[ $image == project_fineract-server* ]]; then
 		echo Tagging $image...
 		echo docker tag $imageid $image:$tag
 		docker tag $imageid $image:$tag
