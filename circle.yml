@@ -18,10 +18,14 @@ jobs:
    - run:
        command: curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
    - run:
-         name: run docker compose
+         name: Build docker compose
          command: |
             docker-compose build
 
+   - run:
+         name: run docker compose
+         command: |
+            docker-compose up -d
    - run:
        command: |-
          printf '127.0.0.1       dev.example.com
