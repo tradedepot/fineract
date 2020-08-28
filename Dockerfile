@@ -17,7 +17,7 @@
 #
 FROM openjdk:11 AS builder
 
-RUN apt-get update -qq && apt-get install -y wget
+RUN apt-get update -qq && apt-get install -y wget && apt-get install haveged -y
 
 COPY . fineract
 WORKDIR /fineract
@@ -42,5 +42,7 @@ FROM gcr.io/distroless/java:11 as fineract
 COPY --from=builder /fineract/target/BOOT-INF/lib /app/lib
 COPY --from=builder /fineract/target/META-INF /app/META-INF
 COPY --from=builder /fineract/target/BOOT-INF/classes /app
+
+EXPOSE 8443
 
 ENTRYPOINT ["java", "-cp", "app:app/lib/*", "org.apache.fineract.ServerApplication"]
