@@ -39,7 +39,7 @@ services:
       context: .
       target: fineract
     ports:
-      - 8443:8443
+      - 80:8443
     depends_on:
       - fineractmysql
     environment:
